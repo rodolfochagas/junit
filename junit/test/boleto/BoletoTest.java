@@ -12,18 +12,18 @@ import programa.Programa;
 
 public class BoletoTest {
 	
+	Fatura fatura;
 	ArrayList <Boleto> boletos;
 	
 	@BeforeEach
 	public void inicializa() {
+		fatura = new Fatura(300.0, "Fulano");
 		boletos = new ArrayList<Boleto>();
 	}
 	
 	@Test
-	public void faturaPaga() {
-		Fatura fatura = new Fatura(300.0, "Fulano");
+	public void faturaPagaComUmBoleto() {
 		Boleto boleto = new Boleto(300.0);
-		
 		boletos.add(boleto);
 		
 		Programa.ProcessadorDeBoletos(boletos, fatura);
@@ -31,10 +31,8 @@ public class BoletoTest {
 	}
 	
 	@Test
-	public void faturaNaoPaga() {
-		Fatura fatura = new Fatura(300.0, "Fulano");
+	public void faturaNaoPagaComUmBoleto() {
 		Boleto boleto = new Boleto(200.0);
-		
 		boletos.add(boleto);
 		
 		Programa.ProcessadorDeBoletos(boletos, fatura);
@@ -42,5 +40,16 @@ public class BoletoTest {
 						
 	}
 	
+	@Test
+	public void faturaPagaComDoisBoletos() {
+		Boleto boleto1 = new Boleto(200.0);
+		Boleto boleto2 = new Boleto(100.0);
+		
+		boletos.add(boleto1);
+		boletos.add(boleto2);
+		
+		Programa.ProcessadorDeBoletos(boletos, fatura);
+		assertTrue(fatura.pago);
+	}
 
 }
