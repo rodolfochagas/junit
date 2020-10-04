@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class BoletoTest {
 	}
 	
 	@Test
-	public void faturaNaoPagaComUmBoleto() {
+	public void testFaturaNaoPagaComUmBoleto() {
 		Boleto boleto = new Boleto(200.0);
 		boletos.add(boleto);
 		
@@ -41,7 +42,7 @@ public class BoletoTest {
 	}
 	
 	@Test
-	public void faturaPagaComDoisBoletos() {
+	public void testFaturaPagaComDoisBoletos() {
 		Boleto boleto1 = new Boleto(200.0);
 		Boleto boleto2 = new Boleto(100.0);
 		
@@ -50,6 +51,16 @@ public class BoletoTest {
 		
 		Programa.ProcessadorDeBoletos(boletos, fatura);
 		assertTrue(fatura.pago);
+	}
+	
+	@Test
+	public void testPagamentoCriado() {
+		Boleto boleto = new Boleto(300.0);
+		boletos.add(boleto);
+		
+		Programa.ProcessadorDeBoletos(boletos, fatura);
+		assertEquals(fatura.listaDePagamentos.get(0).tipoDePagamento, "BOLETO");
+		
 	}
 
 }
